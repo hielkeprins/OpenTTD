@@ -84,7 +84,9 @@ protected:
 	int32_t scroll_x;  ///< Horizontal world coordinate of the base tile left of the top-left corner of the smallmap display.
 	int32_t scroll_y;  ///< Vertical world coordinate of the base tile left of the top-left corner of the smallmap display.
 	int32_t subscroll; ///< Number of pixels (0..3) between the right end of the base tile and the pixel at the top-left corner of the smallmap display.
-	int zoom;        ///< Zoom level. Bigger number means more zoom-out (further away).
+	int tile_zoom;     ///< Zoom level. Bigger number means more zoom-out (further away).
+	int ui_zoom;       ///< Zoom level. Bigger number means more zoom-out (further away).
+	int zoom;          ///< Zoom level. Bigger number means more zoom-out (further away).
 
 	LinkGraphOverlay *overlay;
 
@@ -171,13 +173,14 @@ protected:
 	void SetNewScroll(int sx, int sy, int sub);
 
 	void DrawMapIndicators() const;
-	void DrawSmallMapColumn(void *dst, uint xc, uint yc, int pitch, int reps, int start_pos, int end_pos, Blitter *blitter) const;
+	void DrawSmallMapColumn(void *dst, uint xc, uint yc, int pitch, int reps, int start_pos, int end_pos, int y, int end_y, Blitter *blitter) const;
 	void DrawVehicles(const DrawPixelInfo *dpi, Blitter *blitter) const;
 	void DrawTowns(const DrawPixelInfo *dpi) const;
 	void DrawSmallMap(DrawPixelInfo *dpi) const;
 
 	Point RemapTile(int tile_x, int tile_y) const;
-	Point PixelToTile(int px, int py, int *sub, bool add_sub = true) const;
+	Point TileToPixel(int px, int py) const;
+	Point PixelToTile(int px, int py) const;
 	Point ComputeScroll(int tx, int ty, int x, int y, int *sub);
 	void SetZoomLevel(ZoomLevelChange change, const Point *zoom_pt);
 	void SetOverlayCargoMask();
